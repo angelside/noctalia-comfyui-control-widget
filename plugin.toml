@@ -1,0 +1,42 @@
+id = "angelside/comfyui-control"
+name = "ComfyUI Control"
+version = "1.0.0"
+author = "angelside"
+license = "MIT"
+plugin_api = 31
+dependencies = []
+tags = ["System", "Development"]
+icon = "server"
+description = "Control and monitor ComfyUI through systemd user service."
+
+[[widget]]
+id = "comfyui"
+entry = "widget.luau"
+
+[[panel]]
+id = "menu"
+entry = "menu.luau"
+placement = "attached"
+position = "auto"
+open_near_click = true
+keyboard_focus = "on_demand"
+dismiss_on_outside_click = true
+layer = "overlay"
+width = 280
+height = 280
+
+[[widget.setting]]
+key = "service_name"
+type = "string"
+label_key = "settings.service_name.label"
+description_key = "settings.service_name.description"
+default = "comfyui.service"
+
+[[widget.setting]]
+key = "refresh_interval"
+type = "number"
+label_key = "settings.refresh_interval.label"
+description_key = "settings.refresh_interval.description"
+default = 5
+min = 1
+max = 30

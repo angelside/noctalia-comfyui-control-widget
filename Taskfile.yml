@@ -1,0 +1,30 @@
+version: '3'
+
+vars:
+  PROJECTS_DIR: ~/Projects/code/noctalia-v5-plugins
+  PLUGIN_NAME: angelside/comfyui-controller2
+
+tasks:
+
+  enable:
+    desc: Enable the addon
+    cmds:
+      - noctalia msg plugins enable {{.PLUGIN_NAME}}
+
+  disable:
+    desc: Disable the addon
+    cmd: noctalia msg plugins disable {{.PLUGIN_NAME}}
+
+  add:
+    desc: Add the dev plugin source
+    cmd: noctalia msg plugins source add dev path {{.PROJECTS_DIR}}
+
+
+  noctalia:restart:
+    desc: Clear logs and restart Noctalia
+    platforms: [linux]
+    silent: true
+    cmds:
+      - rm -f ~/.cache/noctalia/noctalia.log ~/.cache/noctalia/noctalia.log.1
+      - pkill -TERM -f '[n]octalia' || true
+      - fish -c 'set -lx NOCTALIA_LOG_LEVEL warn; setsid noctalia >/dev/null 2>&1 </dev/null &'

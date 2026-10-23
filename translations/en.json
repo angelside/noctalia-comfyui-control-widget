@@ -1,0 +1,12 @@
+{
+    "settings": {
+        "service_name": {
+            "label": "Service Name",
+            "description": "Name of the systemd user service to control"
+        },
+        "refresh_interval": {
+            "label": "Refresh Interval",
+            "description": "How often to check service status in seconds"
+        }
+    }
+}

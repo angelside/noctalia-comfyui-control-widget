@@ -1,0 +1,9 @@
+dist/
+bin/
+tmp/
+__*
+
+.github_token
+.env
+
+.idea/
