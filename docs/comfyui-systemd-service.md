@@ -45,7 +45,7 @@ After=network.target
 
 [Service]
 Type=simple
-WorkingDirectory=/home/angelside/Projects/code/AI/ComfyUI-latest
+WorkingDirectory=/home/_USERNAME_/apps/ComfyUI-latest
 ExecStart=/usr/bin/uv run main.py
 Restart=on-failure
 RestartSec=5
