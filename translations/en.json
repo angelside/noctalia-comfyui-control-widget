@@ -7,6 +7,10 @@
         "refresh_interval": {
             "label": "Refresh Interval",
             "description": "How often to check service status in seconds"
+        },
+        "show_text": {
+          "label": "Show text",
+          "description": "Show or hide the ComfyUI label in the bar widget"
         }
     }
 }

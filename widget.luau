@@ -8,6 +8,8 @@ local tertiaryColor = noctalia.getColor("tertiary") or "#4CAF50"
 local errorColor = noctalia.getColor("error") or "#F44336"
 local onSurfaceColor = noctalia.getColor("on_surface") or "#9E9E9E"
 
+local showText = noctalia.getConfig("show_text") ~= false
+
 local function updateWidget()
     local command = {"systemctl", "--user", "is-active", serviceName}
 
@@ -41,7 +43,10 @@ local function updateWidget()
         end
 
         --- Update the widget with the new status
-        barWidget.setText("ComfyUI")
+
+        showText = noctalia.getConfig("show_text") ~= false
+
+        barWidget.setText(showText and "ComfyUI" or "")
         barWidget.setGlyph(glyph)
         barWidget.setGlyphColor(color)
         barWidget.setTooltip("ComfyUI Service: " .. status)
