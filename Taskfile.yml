@@ -2,7 +2,7 @@ version: '3'
 
 vars:
   PROJECTS_DIR: ~/Projects/code/noctalia-v5-plugins
-  PLUGIN_NAME: angelside/comfyui-controller2
+  PLUGIN_NAME: angelside/comfyui-control
 
 tasks:
 
