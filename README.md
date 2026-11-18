@@ -1,98 +1,96 @@
-# ComfyUI Control Plugin for Noctalia v5
+# ComfyUI Control for Noctalia
 
-> A Noctalia v5 plugin that controls and monitors ComfyUI through a systemd user service.
+![Noctalia-v5](https://shieldcn.dev/badge/Noctalia-v5.svg?split=true&logo=lu%3AAppWindow&color=eab308&labelColor=4c4d4e) ![Plugin-API](https://shieldcn.dev/badge/Plugin%20API-31.svg?split=true&logo=lu%3APuzzle&color=eab308&labelColor=4c4d4e) [![License](https://shieldcn.dev/badge/License-MIT.svg?split=true&logo=lu%3AScale&color=eab308&labelColor=4c4d4e)](LICENSE)
+
+A Noctalia v5 bar widget that monitors and controls ComfyUI through a systemd
+user service. Start, stop, and check the status of your ComfyUI instance straight from the bar.
 
 ![ComfyUI Controller screenshot](assets/screenshot.webp)
 
+## Features
+
+- **Live status** - running, stopped, failed, or unknown, refreshed automatically
+- **One-click control** - start/stop via the left- or right-click context menu
+- **Configurable** - service name, polling interval, and optional text label
+- **Quick settings access** - middle-click the widget to open its settings
+
 ## Requirements
 
-- Noctalia V5 (Plugin API 31)
-
+- Noctalia v5 (Plugin API 31)
+- `systemctl` available in a systemd user session
+- ComfyUI configured as a systemd **user** service - see the
+  [ComfyUI User Service Setup Guide](docs/comfyui-systemd-service.md) if you haven't set this up yet
 
 ## Installation
 
-This is an unofficial Noctalia plugin.
+> This is an unofficial, community-maintained Noctalia plugin.
 
 ### Method 1: Git clone
 
-Clone the repository directly into Noctalia's plugin directory:
-
 ```bash
-git clone https://github.com/angelside/noctalia-comfyui-control-widget.git ~/.local/share/noctalia/plugins/noctalia-comfyui-control-widget
+git clone https://github.com/angelside/noctalia-comfyui-control-widget.git \
+  ~/.local/share/noctalia/plugins/noctalia-comfyui-control-widget
 ```
 
 ### Method 2: Download ZIP
 
-1. Open the repository on GitHub.
-2. Select **Code → Download ZIP**.
-3. Extract the downloaded archive.
-4. Copy the plugin folder into:
-
-`~/.local/share/noctalia/plugins/`
-
-5. Make sure `manifest.json` is directly inside the plugin directory.
+1. On GitHub, select **Code → Download ZIP** and extract the archive.
+2. Copy the plugin folder into `~/.local/share/noctalia/plugins/`.
+3. Verify that `manifest.json` sits directly inside the plugin folder:
+    ```text
+    ~/.local/share/noctalia/plugins/noctalia-comfyui-control-widget/manifest.json
+    ```
 
 ### Enable the plugin
 
-1. Open **Noctalia Settings**.
-2. Navigate to **Plugins**.
-3. Find the plugin in the available plugins list.
-4. Enable it.
+1. Open **Settings → Plugins**.
+2. Find **ComfyUI Control** in the plugin list and enable it.
+3. Add the widget to your bar from the widget picker.
 
-If the plugin does not appear, restart Noctalia and check again.
+## Usage
 
+### Widget states
 
-## Features
+| Service state       | Icon         | Color |
+| ------------------- | ------------ | ----- |
+| Running             | `server`     | Green |
+| Stopped             | `server-off` | Red   |
+| Starting / stopping | `server`     | -     |
+| Unknown             | `server`     | Grey  |
 
-- Displays the current status of the ComfyUI service (running, stopped, failed, unknown)
-- Left-click and right-click context menu with Start/Stop options
-- Automatic periodic status polling
-- Configurable service name and refresh interval
-- Optional widget text label, which can be shown or hidden through widget settings
-- Middle-click the widget to open its settings
+The widget shows a `ComfyUI` text label by default - hide it with the
+**Show text** setting. Hovering over the widget shows the current service
+status in a tooltip.
 
+### Context menu
 
-### Widget Display
+Left-click or right-click the widget to open the menu:
 
-The widget displays the ComfyUI service status using an icon and color:
+- **Start ComfyUI** - enabled when the service is not running
+- **Stop ComfyUI** - enabled when the service is not stopped
 
-- Green server icon (`server`) when running
-- Red server-off icon (`server-off`) when stopped
-- Server icon (`server`) when starting or stopping
-- Grey server icon (`server`) when the status cannot be determined
+### Widget settings
 
-The widget displays `ComfyUI` as its text label by default. You can hide the label using the **Show text** setting. Hovering over the widget shows the current service status in a tooltip.
+Middle-click the widget to open its settings.
 
+## Settings
 
-### Context Menu
+| Setting            | Type     | Default           | Description                                        |
+| ------------------ | -------- | ----------------- | -------------------------------------------------- |
+| `service_name`     | `string` | `comfyui.service` | systemd user service to control                    |
+| `refresh_interval` | `int`    | `5`               | Status polling interval in seconds (min `1`, max `30`) |
+| `show_text`        | `bool`   | `true`            | Show the `ComfyUI` text label on the widget        |
 
-Right-clicking or left-clicking the widget opens a menu with:
+## Troubleshooting
 
-- **Start ComfyUI** button, enabled when the service is not running
-- **Stop ComfyUI** button, enabled when the service is not stopped
-
-
-## Configuration
-
-The plugin supports the following settings:
-
-- `service_name`: Name of the systemd user service to control (default: `comfyui.service`)
-- `refresh_interval`: How often to check service status in seconds (default: `5`, minimum: `1`, maximum: `30`)
-- `show_text`: Show or hide the `ComfyUI` text label on the widget (default: `true`)
-
-
-## ComfyUI Systemd Service
-
-This plugin controls ComfyUI through a systemd user service. If you have not configured the service yet, follow the [ComfyUI User Service Setup Guide](docs/comfyui-systemd-service.md).
-
-Once configured, the plugin lets you start and stop ComfyUI directly from the Noctalia bar widget.
-
+- **Plugin not listed?** Restart Noctalia and confirm `manifest.json` is
+  directly inside the plugin folder (not a nested subfolder).
+- **Status stuck on unknown?** Check that the service exists and matches
+  `service_name`:
+    ```bash
+    systemctl --user status comfyui.service
+    ```
 
 ## License
 
-MIT License
-
-
-## Development
-
-This plugin is developed as part of the Noctalia v5 plugin ecosystem.
+[MIT](LICENSE)
